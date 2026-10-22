@@ -1,0 +1,24 @@
+CROSS-DEVICE SYNC SETUP (Supabase, free)
+
+1) Create a free project at supabase.com (any name, any region).
+2) Open SQL Editor > New query, paste this, click Run:
+
+   create table journal (
+     id text primary key,
+     data jsonb not null,
+     updated_at timestamptz default now()
+   );
+   alter table journal enable row level security;
+   create policy "anon access" on journal for all to anon using (true) with check (true);
+
+3) Project Settings > API: copy the Project URL and the "anon public" key.
+4) In the app: Tools > Cloud sync. Paste the URL and the key, tap
+   "Generate code", then "Save & sync".
+5) On your other devices, paste the SAME URL, key and sync code.
+
+Notes
+- The sync code is your journal's address. Keep it private like a password.
+- Newest change wins. The app syncs on every change, every 20 seconds, and
+  when you reopen it. Offline changes sync on your next change.
+- A new device that connects takes the cloud copy. Back up first (Tools).
+- The URL, key and code are stored only on your devices, not in the app files.
